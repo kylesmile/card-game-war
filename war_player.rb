@@ -1,6 +1,6 @@
 class WarPlayer
-	def initialize(card)
-		@cards = [card]
+	def initialize(*cards)
+		@cards = cards
 	end
 
 	def number_of_cards
