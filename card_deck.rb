@@ -1,14 +1,11 @@
-require_relative 'playing_card'
-
 class CardDeck
 	CardRanks = %w(2 3 4 5 6 7 8 9 10 J Q K A)
 	def initialize
-		@cards = []
-		4.times do
-			CardRanks.each do |rank|
-				@cards << PlayingCard.new(rank)
+		@cards = PlayingCard::RANKS.map do |rank|
+			PlayingCard::SUITS.map do |suit|
+				PlayingCard.new(rank, suit)
 			end
-		end
+		end.flatten
 	end
 
 	def has_cards?
@@ -21,5 +18,9 @@ class CardDeck
 
 	def shuffle
 		@cards.shuffle!
+	end
+
+	def number_of_cards
+		@cards.count
 	end
 end

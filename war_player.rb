@@ -1,5 +1,5 @@
 class WarPlayer
-	def initialize(cards)
+	def initialize(cards=[])
 		@cards = cards
 	end
 
@@ -12,6 +12,6 @@ class WarPlayer
 	end
 
 	def take_cards(cards)
-		@cards.push(*cards)
+		@cards.unshift(*cards)
 	end
 end

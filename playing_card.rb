@@ -1,10 +1,11 @@
 class PlayingCard
-	CardRanks = %w(2 3 4 5 6 7 8 9 10 J Q K A)
-	def initialize(rank)
-		@rank = rank
+	RANKS = %w(2 3 4 5 6 7 8 9 10 J Q K A)
+	SUITS = %w(C H D S)
+	def initialize(rank, suit='C')
+		@rank, @suit = rank, suit
 	end
 
 	def value
-		CardRanks.index(@rank)
+		RANKS.index(@rank)
 	end
 end
