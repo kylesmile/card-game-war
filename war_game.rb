@@ -1,15 +1,25 @@
-class WarGame
-	attr_reader :winner, :player1, :player2
+require_relative './war_player'
+require_relative './card_deck'
 
-	def initialize(player1 = WarPlayer.new, player2 = WarPlayer.new)
-		@player1, @player2 = player1, player2
+class WarGame
+	attr_reader :winner
+
+	def initialize(*players)
+		@players = players
+	end
+
+	def player(n)
+		@players[n]
 	end
 
 	def deal
 		deck = CardDeck.new
 		deck.shuffle
-		@player1.take_cards(deck.deal(26))
-		@player2.take_cards(deck.deal(26))
+		while deck.number_of_cards > 0
+			@players.each do |player|
+				player.take_cards(deck.deal)
+			end
+		end
 	end
 
 	def play_game
@@ -19,24 +29,27 @@ class WarGame
 	end
 
 	def play_round(cards=[])
-		card1 = @player1.play_top_card
-		card2 = @player2.play_top_card
+		played_cards = {}
+		@players.each_with_index do |player, i|
+			card = player.play_top_card
+			cards.push(card)
+			played_cards[i] = card
+		end
 		
-		cards.push(card1, card2)
 		cards.compact!
 
-		if (card1.nil? && card2.nil?)
+		played_cards.delete_if { |key, value| value.nil? }
+
+		played_sorted = played_cards.sort { |a,b| b[1].value <=> a[1].value}
+
+		if (played_cards.count == 0)
 			@winner = "Tie"
-		elsif (card2.nil?)
-			@winner = "Player 1"
-		elsif (card1.nil?)
-			@winner = "Player 2"
-		elsif (card1.value > card2.value)
-			@player1.take_cards(cards)
-		elsif (card2.value > card1.value)
-			@player2.take_cards(cards)
-		else
+		elsif (played_cards.count == 1)
+			@winner = "Player #{played_cards.keys[0] + 1}"
+		elsif (played_sorted[0][1].value == played_sorted[1][1].value)
 			play_round(cards)
+		else
+			player(played_sorted[0][0]).take_cards(cards)
 		end
 	end
 end

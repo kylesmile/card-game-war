@@ -3,6 +3,7 @@ require_relative '../card_deck.rb'
 require_relative '../playing_card.rb'
 
 class TestCardDeck < MiniTest::Unit::TestCase
+
 	def setup
 		@deck = CardDeck.new
 	end
@@ -23,4 +24,5 @@ class TestCardDeck < MiniTest::Unit::TestCase
 		assert(deck.deal[0].is_a?(PlayingCard))
 		assert_equal(51, deck.number_of_cards)
 	end
+	
 end
