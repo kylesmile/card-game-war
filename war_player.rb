@@ -1,5 +1,5 @@
 class WarPlayer
-	def initialize(*cards)
+	def initialize(cards)
 		@cards = cards
 	end
 
