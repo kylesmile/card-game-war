@@ -25,4 +25,10 @@ class TestCardDeck < MiniTest::Unit::TestCase
 		assert_equal(51, deck.number_of_cards)
 	end
 	
+	def test_cards_printed_as_strings
+		card1 = PlayingCard.new('A')
+		card2 = PlayingCard.new('J', 'D')
+		assert_equal('Ace of Clubs', card1.to_s)
+		assert_equal('Jack of Diamonds', card2.to_s)
+	end
 end

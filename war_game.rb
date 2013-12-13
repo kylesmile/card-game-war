@@ -28,7 +28,7 @@ class WarGame
 		end
 	end
 
-	def play_round(cards=[])
+	def play_round(cards=[], &block)
 		played_cards = {}
 		@players.each_with_index do |player, i|
 			card = player.play_top_card
@@ -44,12 +44,18 @@ class WarGame
 
 		if (played_cards.count == 0)
 			@winner = "Tie"
+			block.call(nil, nil, @winner) if block_given?
 		elsif (played_cards.count == 1)
 			@winner = "Player #{played_cards.keys[0] + 1}"
+			block.call(nil, nil, "#{@winner} wins!") if block_given?
 		elsif (played_sorted[0][1].value == played_sorted[1][1].value)
-			play_round(cards)
+			block.call(played_cards[0], played_cards[1], "Tied cards!") if block_given?
+			play_round(cards, &block)
 		else
+			cards.shuffle!
 			player(played_sorted[0][0]).take_cards(cards)
+			message = "Player #{played_sorted[0][0] + 1} wins #{cards.count} cards!"
+			block.call(played_cards[0], played_cards[1], message) if block_given?
 		end
 	end
 end

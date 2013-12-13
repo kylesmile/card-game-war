@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-Dir[File.dirname(__FILE__) + '/../*.rb'].each { |file| require_relative "../#{File.basename(file)}"}
+require_relative '../war_game'
 
 class TestWar < MiniTest::Unit::TestCase
 
