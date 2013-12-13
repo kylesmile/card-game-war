@@ -1,0 +1,10 @@
+task :default => :runtests
+
+task :runtests do
+	require 'minitest/pride'
+	load 'tests/card_deck_tests.rb'
+	load 'tests/n_player_tests.rb'
+	load 'tests/socket_client_tests.rb'
+	load 'tests/socket_server_tests.rb'
+	load 'tests/war_tests.rb'
+end
